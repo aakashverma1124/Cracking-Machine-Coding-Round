@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class Snake {
     private final int start;

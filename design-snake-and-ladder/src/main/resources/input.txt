@@ -1,0 +1,16 @@
+Enter Board Size: 100
+Enter Number Of Players: 2
+--Enter Player Details--
+Aakash
+Sarthak
+Enter Number Of Snakes: 4
+--Enter Snake Positions--
+27 5
+40 3
+66 45
+99 41
+Enter Number Of Ladders: 3
+--Enter Ladder Positions--
+4 25
+13 46
+62 81
