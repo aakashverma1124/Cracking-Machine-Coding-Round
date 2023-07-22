@@ -9,15 +9,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DLLNode<Key, Value> {
-    DLLNode<Key, Value> prev;
-    DLLNode<Key, Value> next;
+public class DLLNode<Key> {
+    DLLNode<Key> prev;
+    DLLNode<Key> next;
     Key key;
-    Value value;
-
-    public DLLNode(Key key, Value value) {
+    public DLLNode(Key key) {
         this.key = key;
-        this.value = value;
         this.prev = null;
         this.next = null;
     }

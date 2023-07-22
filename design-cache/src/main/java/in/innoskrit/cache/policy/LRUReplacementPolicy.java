@@ -4,45 +4,35 @@ import in.innoskrit.algorithm.DLLNode;
 import in.innoskrit.algorithm.DoublyLinkedList;
 import in.innoskrit.cache.exception.KeyNotFoundException;
 import in.innoskrit.cache.storage.Storage;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 
-public class LRUReplacementPolicy<Key, Value> implements ReplacementPolicy<Key, Value> {
+import java.util.HashMap;
+import java.util.Map;
 
-    private final Integer capacity;
-    DoublyLinkedList<Key, Value> dll;
-    private Storage<Key, Value> storage;
+public class LRUReplacementPolicy<Key> implements ReplacementPolicy<Key> {
+    DoublyLinkedList<Key> dll;
+    private Map<Key, DLLNode<Key>> map;
 
-    public LRUReplacementPolicy(Integer capacity, Storage<Key, Value> storage) {
-        this.capacity = capacity;
-        this.dll = new DoublyLinkedList<Key, Value>();
-        this.storage = storage;
+    public LRUReplacementPolicy() {
+        this.dll = new DoublyLinkedList<>();
+        this.map = new HashMap<>();
     }
 
-    public void put(Key key, Value value) {
-        if(storage.containsKey(key)) {
-            DLLNode<Key, Value> node = (DLLNode<Key, Value>) storage.get(key);
-            dll.deleteNode(node);
-            node.setValue(value);
-            dll.addAtFirst(node);
-            storage.add(key, (Value) node);
+    @Override
+    public void keyAccessed(Key key) {
+        if(map.containsKey(key)) {
+            dll.deleteNode(map.get(key));
+            dll.addAtFirst(map.get(key));
         } else {
-            if(this.capacity == this.storage.size()) {
-                System.out.println("Capacity Full");
-                DLLNode node = dll.deleteFromLast();
-                storage.remove((Key) node.getKey());
-            }
-            DLLNode<Key, Value> node = new DLLNode<Key, Value>(key, value);
+            DLLNode<Key> node = new DLLNode<>(key);
             dll.addAtFirst(node);
-            storage.add(key, (Value) node);
+            map.put(key, node);
         }
     }
 
-    public Value get(Key key) {
-        if(!storage.containsKey(key)) {
-            throw new KeyNotFoundException("Requested Key " + key + " Not Found.");
-        }
-        DLLNode<Key, Value> node = (DLLNode<Key, Value>) storage.get(key);
-        dll.deleteNode(node);
-        dll.addAtFirst(node);
-        return node.getValue();
+    @Override
+    public Key evictKey() {
+        DLLNode<Key> node = dll.deleteFromLast();
+        return node.getKey();
     }
 }

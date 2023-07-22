@@ -1,5 +1,6 @@
 package in.innoskrit.cache;
 
+import in.innoskrit.cache.factory.CacheFactory;
 import in.innoskrit.cache.policy.LRUReplacementPolicy;
 import in.innoskrit.cache.storage.HashMapStorage;
 import in.innoskrit.cache.storage.Storage;
@@ -13,9 +14,7 @@ public class CacheTest {
 
     @BeforeEach
     public void setup() {
-        Storage<Integer, Integer> storage = new HashMapStorage<Integer, Integer>();
-        LRUReplacementPolicy<Integer, Integer> lru = new LRUReplacementPolicy<Integer, Integer>(3, storage);
-        cache = new Cache<>(lru);
+        cache = new CacheFactory<Integer, Integer>().getDefaultCache(3);
     }
 
     @Test
