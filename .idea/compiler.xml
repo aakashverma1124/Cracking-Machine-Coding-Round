@@ -2,11 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="design-file-system-using-byte-array" />
         <module name="design-coding-platform" />
+        <module name="design-doctor-appointment-system" />
+        <module name="design-splitwise-application" />
+        <module name="design-customer-resolution-system" />
+        <module name="design-snake-and-ladder" />
+        <module name="design-movie-booking-system" />
+        <module name="design-meeting-scheduler" />
+        <module name="design-cache" />
+        <module name="design-ecommerce-application" />
       </profile>
     </annotationProcessing>
   </component>

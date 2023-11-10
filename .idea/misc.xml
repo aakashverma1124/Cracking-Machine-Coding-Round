@@ -5,6 +5,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/design-coding-platform/pom.xml" />
+        <option value="$PROJECT_DIR$/design-movie-booking-system/pom.xml" />
+        <option value="$PROJECT_DIR$/design-snake-and-ladder/pom.xml" />
+        <option value="$PROJECT_DIR$/design-cache/pom.xml" />
+        <option value="$PROJECT_DIR$/design-meeting-scheduler/pom.xml" />
+        <option value="$PROJECT_DIR$/design-doctor-appointment-system/pom.xml" />
+        <option value="$PROJECT_DIR$/design-ecommerce-application/pom.xml" />
+        <option value="$PROJECT_DIR$/design-splitwise-application/pom.xml" />
+        <option value="$PROJECT_DIR$/design-file-system-using-byte-array/pom.xml" />
+        <option value="$PROJECT_DIR$/design-customer-resolution-system/pom.xml" />
       </list>
     </option>
   </component>
