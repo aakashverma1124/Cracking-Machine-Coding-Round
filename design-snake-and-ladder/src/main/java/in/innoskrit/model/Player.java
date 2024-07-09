@@ -1,18 +1,10 @@
 package in.innoskrit.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.UUID;
-
-@Getter
 public class Player {
-    private final String id;
-    private final String name;
+    private String name;
     private int currentPosition;
 
     public Player(String name) {
-        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.currentPosition = 0;
     }
@@ -21,4 +13,15 @@ public class Player {
         this.currentPosition = position;
     }
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -1,61 +1,59 @@
 package in.innoskrit.service;
 
-import in.innoskrit.model.Game;
+import in.innoskrit.model.Board;
+import in.innoskrit.model.Ladder;
 import in.innoskrit.model.Player;
+import in.innoskrit.model.Snake;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class GameService {
+    private Board board;
 
-    private Game game;
-    private Queue<Player> playerSequence;
-    private boolean isGameOver;
-    private DiceService diceService;
-    private BoardService boardService;
-
-    public GameService(Game game) {
-        this.game = game;
-        playerSequence = new LinkedList<>(game.getPlayers());
-        this.diceService = new DiceService();
-        this.boardService = new BoardService(game.getBoard());
+    public GameService() {
     }
 
-    public void startGame() {
-
-        System.out.println("Game Starts");
-        System.out.println("Initial Positions of Players:");
-        for(Player player : game.getPlayers()) {
-            System.out.println(player.getName() + " : " + player.getCurrentPosition());
+    public void startGame(Board board) {
+        this.board = board;
+        boolean isGameOver = false;
+        Queue<Player> queue = new LinkedList<>();
+        for(Player player : board.getPlayers()) {
+            queue.offer(player);
         }
 
         while(!isGameOver) {
-            Player player = playerSequence.poll();
-            int diceValue = diceService.rollDice();
-            int playerCurrentPosition = player.getCurrentPosition();
-            int playerNewPosition = playerCurrentPosition + diceValue;
+            Player currentPlayer = queue.poll();
+            int move = board.getDice().rollDice();
+            assert currentPlayer != null;
+            int newPosition = currentPlayer.getCurrentPosition() + move;
 
-            System.out.println(player.getName() + " rolled dice and got " + diceValue);
-
-            if(playerNewPosition > 100) {
-                playerNewPosition = playerCurrentPosition;
-                System.out.println(player.getName() + " reached at " + playerNewPosition);
-            } else if(playerNewPosition == game.getBoard().getSize()) {
-                this.isGameOver = true;
-                System.out.println(player.getName() + " has won the game.");
-            } else {
-                int playerUpdatedPosition = boardService.checkIfSnakeLadderPresent(playerNewPosition);
-                if(playerUpdatedPosition < playerNewPosition) {
-                    System.out.println(player.getName() + " got bit by Snake.");
-                } else if (playerUpdatedPosition > playerNewPosition) {
-                    System.out.println(player.getName() + " got Ladder.");
-                }
-                player.setCurrentPosition(playerUpdatedPosition);
-                System.out.println(player.getName() + " reached at " + playerUpdatedPosition);
+            if(newPosition > board.getSize()) {
+                queue.offer(currentPlayer);
+                continue;
             }
-            playerSequence.add(player);
+
+            for(Snake snake : board.getSnakes()) {
+                if(snake.getStart() == newPosition) {
+                    newPosition = snake.getEnd();
+                }
+            }
+
+            for(Ladder ladder : board.getLadders()) {
+                if(ladder.getStart() == newPosition) {
+                    newPosition = ladder.getEnd();
+                }
+            }
+
+            System.out.println(currentPlayer.getName() + " rolled a " + move + " and moved from " + currentPlayer.getCurrentPosition() + " to " + newPosition);
+
+            currentPlayer.setCurrentPosition(newPosition);
+            if(currentPlayer.getCurrentPosition() == board.getSize()) {
+                System.out.println(currentPlayer.getName() + " wins the game");
+                isGameOver = true;
+            }
+
+            queue.offer(currentPlayer);
         }
     }
-
-
 }

@@ -10,46 +10,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    private Board setUpBoard() throws IOException {
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter Board Size: ");
-        int boardSize = Integer.parseInt(reader.readLine());
 
-        System.out.print("Enter Number Of Players: ");
-        int numberOfPlayers = Integer.parseInt(reader.readLine());
+        System.out.print("Enter board size: ");
+        int boardSize = Integer.parseInt(reader.readLine().trim());
 
+        System.out.print("Enter number of dice: ");
+        int numberOfDice = Integer.parseInt(reader.readLine().trim());
+        Dice dice = new Dice(numberOfDice);
+
+        System.out.print("Enter number of players: ");
+        int numberOfPlayers = Integer.parseInt(reader.readLine().trim());
+
+        System.out.println("Enter player details");
         List<Player> players = new ArrayList<>();
-
-        System.out.println("--Enter Player Details--");
         for(int i = 0; i < numberOfPlayers; i++) {
-            String playerName = reader.readLine();
-            players.add(new Player(playerName));
+            String name = reader.readLine().trim();
+            players.add(new Player(name));
         }
 
-        System.out.print("Enter Number Of Snakes: ");
-        int numberOfSnakes = Integer.parseInt(reader.readLine());
+        System.out.print("Enter number of snakes: ");
+        int numberOfSnakes = Integer.parseInt(reader.readLine().trim());
 
+        System.out.println("Enter snake details");
         List<Snake> snakes = new ArrayList<>();
-
-        System.out.println("--Enter Snake Positions--");
         for(int i = 0; i < numberOfSnakes; i++) {
             String[] snakePositions = reader.readLine().trim().split("\\s+");
             snakes.add(new Snake(Integer.parseInt(snakePositions[0]), Integer.parseInt(snakePositions[1])));
         }
 
-        System.out.print("Enter Number Of Ladders: ");
-        int numberOfLadders = Integer.parseInt(reader.readLine());
+        System.out.print("Enter number of ladders: ");
+        int numberOfLadders = Integer.parseInt(reader.readLine().trim());
 
+        System.out.println("Enter ladder details");
         List<Ladder> ladders = new ArrayList<>();
-
-        System.out.println("--Enter Ladder Positions--");
         for(int i = 0; i < numberOfLadders; i++) {
             String[] ladderPositions = reader.readLine().trim().split("\\s+");
             ladders.add(new Ladder(Integer.parseInt(ladderPositions[0]), Integer.parseInt(ladderPositions[1])));
         }
 
-        Board board = new Board(boardSize, snakes, ladders);
-        GameService gameService = new GameService(new Game(board, players, 1, false));
-        gameService.startGame();
+        return new Board(boardSize, dice, snakes, ladders, players);
+    }
+    public static void main(String[] args) throws IOException {
+        Main main = new Main();
+        GameService gameService = new GameService();
+
+        Board board = main.setUpBoard();
+        gameService.startGame(board);
     }
 }
