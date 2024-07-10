@@ -11,7 +11,7 @@ public class UserRepository {
     Map<String, User> userData;
 
     public UserRepository() {
-        userData = new HashMap<String, User>();
+        userData = new HashMap<>();
     }
 
     public void addUser(User user) {

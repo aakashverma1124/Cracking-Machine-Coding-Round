@@ -16,18 +16,18 @@ public class ExpenseRepository {
     Map<String, Map<String, Double>> balanceSheet;
 
     public ExpenseRepository() {
-        this.expenseMap = new HashMap<String, Expense>();
-        this.balanceSheet = new HashMap<String, Map<String, Double>>();
+        this.expenseMap = new HashMap<>();
+        this.balanceSheet = new HashMap<>();
     }
 
     public void createExpense(ExpenseType expenseType, double amount, String expenseBy, List<Split> splits, ExpenseMetaData expenseMetaData) {
-        Expense expense = null;
+        Expense expense;
         if (expenseType == ExpenseType.EQUAL) {
             expense = new EqualExpense(amount, expenseBy, splits, expenseMetaData);
             expense.validate();
             expenseMap.put(expense.getId(), expense);
             if(!balanceSheet.containsKey(expenseBy))
-                balanceSheet.put(expenseBy, new HashMap<String, Double>());
+                balanceSheet.put(expenseBy, new HashMap<>());
             Map<String, Double> map = balanceSheet.get(expenseBy);
             for(Split split : splits) {
                 EqualSplit equalSplit = (EqualSplit) split;
@@ -40,7 +40,7 @@ public class ExpenseRepository {
             expense.validate();
             expenseMap.put(expense.getId(), expense);
             if(!balanceSheet.containsKey(expenseBy))
-                balanceSheet.put(expenseBy, new HashMap<String, Double>());
+                balanceSheet.put(expenseBy, new HashMap<>());
             Map<String, Double> map = balanceSheet.get(expenseBy);
             for(Split split : splits) {
                 ExactSplit exactSplit = (ExactSplit) split;
@@ -53,7 +53,7 @@ public class ExpenseRepository {
             expense.validate();
             expenseMap.put(expense.getId(), expense);
             if(!balanceSheet.containsKey(expenseBy))
-                balanceSheet.put(expenseBy, new HashMap<String, Double>());
+                balanceSheet.put(expenseBy, new HashMap<>());
             Map<String, Double> map = balanceSheet.get(expenseBy);
             for(Split split : splits) {
                 PercentageSplit percentageSplit = (PercentageSplit) split;

@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ExpenseService {
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
-    public ExpenseService() {
-        expenseRepository = new ExpenseRepository();
+    public ExpenseService(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
     }
 
     public void createExpense(ExpenseType expenseType, double amount, String expenseBy, List<Split> splits, ExpenseMetaData expenseMetaData) {

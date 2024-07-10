@@ -1,6 +1,5 @@
 package in.innoskrit.model.expense;
 
-import in.innoskrit.model.User;
 import in.innoskrit.model.split.Split;
 import lombok.Getter;
 import lombok.Setter;
