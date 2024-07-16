@@ -7,16 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="design-file-system-using-byte-array" />
         <module name="design-coding-platform" />
         <module name="design-doctor-appointment-system" />
+        <module name="design-api-ratelimiter" />
+        <module name="design-file-system" />
         <module name="design-splitwise-application" />
         <module name="design-customer-resolution-system" />
         <module name="design-snake-and-ladder" />
         <module name="design-movie-booking-system" />
         <module name="design-meeting-scheduler" />
+        <module name="design-snake-game" />
         <module name="design-cache" />
+        <module name="design-middleware-router" />
         <module name="design-ecommerce-application" />
+        <module name="design-file-system-using-byte-array" />
+        <module name="design-apply-coupons-on-shopping-cart" />
       </profile>
     </annotationProcessing>
   </component>

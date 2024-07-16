@@ -6,7 +6,7 @@ import in.innoskrit.cache.storage.HashMapStorage;
 
 public class CacheFactory<Key, Value> {
     public Cache<Key, Value> getDefaultCache(final int capacity) {
-        return new Cache<Key, Value>(new LRUReplacementPolicy<>(),
+        return new Cache<>(new LRUReplacementPolicy<>(),
                 new HashMapStorage<>(capacity));
     }
 }

@@ -14,6 +14,12 @@
         <option value="$PROJECT_DIR$/design-splitwise-application/pom.xml" />
         <option value="$PROJECT_DIR$/design-file-system-using-byte-array/pom.xml" />
         <option value="$PROJECT_DIR$/design-customer-resolution-system/pom.xml" />
+        <option value="$PROJECT_DIR$/design-api-ratelimiter/pom.xml" />
+        <option value="$PROJECT_DIR$/design-apply-coupon-on-shopping-carts/pom.xml" />
+        <option value="$PROJECT_DIR$/design-apply-coupons-on-shopping-cart/pom.xml" />
+        <option value="$PROJECT_DIR$/design-snake-game/pom.xml" />
+        <option value="$PROJECT_DIR$/design-middleware-router/pom.xml" />
+        <option value="$PROJECT_DIR$/design-file-system/pom.xml" />
       </list>
     </option>
   </component>

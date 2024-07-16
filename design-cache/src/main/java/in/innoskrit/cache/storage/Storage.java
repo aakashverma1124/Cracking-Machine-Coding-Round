@@ -12,5 +12,5 @@ public interface Storage<Key, Value> {
     void add(Key key, Value value) throws StorageFullException;
     void remove(Key key) throws KeyNotFoundException;
     Value get(Key key) throws KeyNotFoundException;
-    public boolean isStorageFull();
+    boolean isStorageFull();
 }

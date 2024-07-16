@@ -2,16 +2,13 @@ package in.innoskrit.cache.policy;
 
 import in.innoskrit.algorithm.DLLNode;
 import in.innoskrit.algorithm.DoublyLinkedList;
-import in.innoskrit.cache.exception.KeyNotFoundException;
-import in.innoskrit.cache.storage.Storage;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LRUReplacementPolicy<Key> implements ReplacementPolicy<Key> {
     DoublyLinkedList<Key> dll;
-    private Map<Key, DLLNode<Key>> map;
+    private final Map<Key, DLLNode<Key>> map;
 
     public LRUReplacementPolicy() {
         this.dll = new DoublyLinkedList<>();

@@ -7,13 +7,13 @@ public class DoublyLinkedList<Key> {
     DLLNode<Key> tail;
 
     public DoublyLinkedList() {
-        this.head = new DLLNode<Key>(null);
-        this.tail = new DLLNode<Key>(null);
+        this.head = new DLLNode<>(null);
+        this.tail = new DLLNode<>(null);
         this.head.next = tail;
         this.tail.prev = head;
     }
 
-    public DLLNode<Key> addAtFirst(DLLNode<Key> node) {
+    public void addAtFirst(DLLNode<Key> node) {
         if(node == null) {
             throw new UnexpectedElementFoundException("Null node cannot be added.");
         }
@@ -23,7 +23,6 @@ public class DoublyLinkedList<Key> {
         headNext.prev = node;
         node.prev = head;
         head.next = node;
-        return node;
     }
 
     public DLLNode<Key> deleteFromLast() {
@@ -33,9 +32,8 @@ public class DoublyLinkedList<Key> {
         return tailPrev;
     }
 
-    public DLLNode<Key> deleteNode(DLLNode<Key> node) {
+    public void deleteNode(DLLNode<Key> node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
-        return node;
     }
 }
