@@ -1,6 +1,5 @@
 package in.innoskrit;
 
-import java.nio.file.Path;
 import java.util.Map;
 
 public class MiddlewareRouterImpl implements MiddlewareRouter {
