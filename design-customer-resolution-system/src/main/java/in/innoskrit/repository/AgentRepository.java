@@ -1,6 +1,7 @@
 package in.innoskrit.repository;
 
 
+import in.innoskrit.exception.AgentNotFoundException;
 import in.innoskrit.model.Agent;
 import in.innoskrit.model.Specialization;
 
@@ -17,10 +18,9 @@ public class AgentRepository {
         agentMap = new HashMap<>();
     }
 
-    public Agent addAgent(String email, String agentName, List<Specialization> specializations) {
+    public void addAgent(String email, String agentName, List<Specialization> specializations) {
         Agent agent = new Agent(email, agentName, specializations);
         agentMap.put(agent.getAgentEmail(), agent);
-        return agent;
     }
 
     public List<Agent> getAgentsBySpecialization(Specialization specialization) {
@@ -43,5 +43,10 @@ public class AgentRepository {
             agentList.add(entry.getValue());
         }
         return agentList;
+    }
+
+    public Agent getAgentByEmail(String email) {
+        if(!agentMap.containsKey(email)) throw new AgentNotFoundException("Agent Not Found");
+        return agentMap.get(email);
     }
 }
