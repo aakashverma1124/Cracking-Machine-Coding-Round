@@ -1,5 +1,6 @@
 package in.innoskrit.model.issue;
 
+import in.innoskrit.constants.Constant;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,10 @@ public abstract class Issue {
     private final String subject;
     private final String description;
     private final String createdBy;
+
+    private String assignedTo;
     private String statusMessage;
+
     private IssueState issueState;
 
     public Issue(String issueId, String transactionId, String subject, String description, String createdBy) {
@@ -18,7 +22,8 @@ public abstract class Issue {
         this.subject = subject;
         this.description = description;
         this.createdBy = createdBy;
-        this.statusMessage = "Issue has been raised.";
+        this.statusMessage = Constant.INITIAL_STATUS;
         this.issueState = IssueState.OPEN;
     }
+
 }

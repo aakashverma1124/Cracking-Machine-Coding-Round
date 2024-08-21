@@ -6,8 +6,12 @@ import java.util.List;
 
 public class DefaultStrategy implements IAssignStrategy {
 
-    public boolean assignAgentBySpecialization(List<Agent> agents, String issueId) {
-        boolean assigned = false;
+    public Agent assignAgentBySpecialization(List<Agent> agents, String issueId) {
+
+        if(agents == null || agents.size() == 0) {
+            return null;
+        }
+
         Agent suitableAgent = null;
         int queueSize = Integer.MAX_VALUE;
         for(Agent agent : agents) {
@@ -18,15 +22,17 @@ public class DefaultStrategy implements IAssignStrategy {
         }
         if(suitableAgent != null) {
             suitableAgent.getWaitingQueue().add(issueId);
-            System.out.println("Issue " + issueId + " assigned to " + suitableAgent.getAgentName());
-            assigned = true;
+            if(suitableAgent.getWaitingQueue().size() == 1) {
+                System.out.println("Issue " + issueId + " assigned to " + suitableAgent.getAgentName());
+            } else {
+                System.out.println("Issue " + issueId + " added to wait-list of " + suitableAgent.getAgentName());
+            }
         }
-        return assigned;
-
+        return suitableAgent;
     }
 
     @Override
-    public boolean assignAgent(List<Agent> agents, String issueId) {
+    public Agent assignAgent(List<Agent> agents, String issueId) {
         Agent suitableAgent = null;
         int queueSize = Integer.MAX_VALUE;
         for(Agent agent : agents) {
@@ -37,8 +43,12 @@ public class DefaultStrategy implements IAssignStrategy {
         }
         assert suitableAgent != null;
         suitableAgent.getWaitingQueue().add(issueId);
-        System.out.println("Issue " + issueId + " added to wait-list of " + suitableAgent.getAgentName());
-        return true;
+        if(suitableAgent.getWaitingQueue().size() == 1) {
+            System.out.println("Issue " + issueId + " assigned to " + suitableAgent.getAgentName());
+        } else {
+            System.out.println("Issue " + issueId + " added to wait-list of " + suitableAgent.getAgentName());
+        }
+        return suitableAgent;
     }
 
 

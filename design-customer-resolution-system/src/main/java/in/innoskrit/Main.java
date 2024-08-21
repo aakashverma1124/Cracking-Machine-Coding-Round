@@ -4,7 +4,6 @@ import in.innoskrit.model.Specialization;
 import in.innoskrit.model.issue.IssueState;
 import in.innoskrit.repository.AgentRepository;
 import in.innoskrit.repository.CustomerRepository;
-import in.innoskrit.repository.IssueManagementRepository;
 import in.innoskrit.service.*;
 
 import java.util.Arrays;
@@ -14,7 +13,7 @@ public class Main {
         AgentService agentService = new AgentService(new AgentRepository());
         CustomerService customerService = new CustomerService(new CustomerRepository());
         IAssignStrategy assignStrategy = new DefaultStrategy();
-        IssueManagementService issueManagementService = new IssueManagementService(new IssueManagementRepository(agentService, assignStrategy, customerService));
+        IssueManagementService issueManagementService = new IssueManagementService(agentService, assignStrategy, customerService);
 
         customerService.addCustomer("testUser1@test.com", "Test User 1");
         customerService.addCustomer("testUser2@test.com", "Test User 2");
@@ -34,7 +33,9 @@ public class Main {
         System.out.println(issueManagementService.getIssueByEmail("testUser2@test.com"));
 
         issueManagementService.updateIssue("I3", IssueState.IN_PROGRESS, "Waiting for payment confirmation");
-        issueManagementService.resolveIssue("I3", "PaymentFailed debited amount will get reversed");
+        issueManagementService.resolveIssue("I3", "Payment Failed debited amount will get reversed");
 
+        System.out.println(agentService.viewAgentsWorkHistory("agent1@test.com").toString());
+        System.out.println(agentService.viewAgentsWorkHistory("agent2@test.com").toString());
     }
 }

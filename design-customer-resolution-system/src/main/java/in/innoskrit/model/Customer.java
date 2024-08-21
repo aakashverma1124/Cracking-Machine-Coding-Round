@@ -12,7 +12,7 @@ import java.util.Set;
 public class Customer {
     private String customerEmail;
     private String customerName;
-    private Set<Issue> issues;
+    private Set<String> issues;
 
     public Customer(String email, String name) {
         this.customerEmail = email;

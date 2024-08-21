@@ -4,6 +4,7 @@ import in.innoskrit.model.Agent;
 import in.innoskrit.model.Specialization;
 import in.innoskrit.repository.AgentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AgentService {
@@ -14,10 +15,9 @@ public class AgentService {
         this.agentRepository = agentRepository;
     }
 
-    public Agent addAgent(String email, String agentName, List<Specialization> specializations) {
-        Agent agent = agentRepository.addAgent(email, agentName, specializations);
+    public void addAgent(String email, String agentName, List<Specialization> specializations) {
+        agentRepository.addAgent(email, agentName, specializations);
         System.out.println(agentName + " created.");
-        return agent;
     }
 
     public List<Agent> getAgentsBySpecialization(Specialization specialization) {
@@ -26,5 +26,17 @@ public class AgentService {
 
     public List<Agent> getAllAgents() {
         return agentRepository.getAllAgents();
+    }
+
+    public Agent getAgentByEmail(String email) {
+        return agentRepository.getAgentByEmail(email);
+    }
+
+    public List<String> viewAgentsWorkHistory(String email) {
+        Agent agent = agentRepository.getAgentByEmail(email);
+        List<String> issues = new ArrayList<>();
+        issues.addAll(agent.getResolvedIssues());
+        issues.addAll(agent.getWaitingQueue());
+        return issues;
     }
 }

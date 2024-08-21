@@ -2,8 +2,6 @@ package in.innoskrit.repository;
 
 import in.innoskrit.exception.CustomerNotFoundException;
 import in.innoskrit.model.Customer;
-import in.innoskrit.service.AgentService;
-import in.innoskrit.service.IAssignStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
