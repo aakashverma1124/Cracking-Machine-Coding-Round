@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TokenBucketRateLimiter implements RateLimiter {
-
+    private final int MAX_CREDIT_TO_BE_ALLOWED = 2;
     private final int capacity;
     private final int refillRate;
     Map<String, TokenBucket> tokens;
@@ -21,7 +21,7 @@ public class TokenBucketRateLimiter implements RateLimiter {
         long currentTime = System.currentTimeMillis();
         long elapsed = currentTime - tokenBucket.getLastRefillTimestamp();
         if(elapsed > refillRate) {
-            int tokens = Math.min(tokenBucket.getCapacity(), tokenBucket.getTokens() + (int) (elapsed/tokenBucket.getRefillRate()));
+            int tokens = Math.min((int) (elapsed/refillRate) * capacity + tokenBucket.getTokens(), capacity + MAX_CREDIT_TO_BE_ALLOWED);
             tokenBucket.setTokens(tokens);
             tokenBucket.setLastRefillTimestamp(currentTime);
         }
@@ -38,7 +38,7 @@ public class TokenBucketRateLimiter implements RateLimiter {
 
     @Override
     public synchronized boolean rateLimit(String userId) {
-        TokenBucket tokenBucket = tokens.computeIfAbsent(userId, k -> new TokenBucket(this.capacity, refillRate));
+        TokenBucket tokenBucket = tokens.computeIfAbsent(userId, k -> new TokenBucket(this.capacity));
         return allowRequest(tokenBucket);
     }
 }

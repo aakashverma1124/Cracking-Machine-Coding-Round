@@ -1,21 +1,14 @@
 package in.innoskrit.algorithm.tokenbucket;
 
 public class TokenBucket {
-    private final int capacity;
-    private final int refillRate;
     private long lastRefillTimestamp;
     private int tokens;
 
-    public TokenBucket(int capacity, int refillRate) {
-        this.capacity = capacity;
-        this.refillRate = refillRate;
+    public TokenBucket(int capacity) {
         this.lastRefillTimestamp = System.currentTimeMillis();
         this.tokens = capacity;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
 
     public long getLastRefillTimestamp() {
         return lastRefillTimestamp;
@@ -33,14 +26,9 @@ public class TokenBucket {
         this.tokens = tokens;
     }
 
-    public long getRefillRate() {
-        return refillRate;
-    }
-
     @Override
     public String toString() {
         return "TokenBucket{" +
-                "capacity=" + capacity +
                 ", lastRefillTimestamp=" + lastRefillTimestamp +
                 ", tokens=" + tokens +
                 '}';

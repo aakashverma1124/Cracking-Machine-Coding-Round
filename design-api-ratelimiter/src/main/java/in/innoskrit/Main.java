@@ -16,16 +16,16 @@ public class Main {
     public static void testTokenBucketRateLimiter() throws InterruptedException {
         RateLimiter rateLimiter = new TokenBucketRateLimiter(5, 1000);
         String customerId = "user1";
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 1; i++) {
             boolean allowed = rateLimiter.rateLimit(customerId);
             System.out.println(Thread.currentThread().getName() + " Request " + (i + 1) + ": " + allowed);
         }
 
         System.out.println(Thread.currentThread().getName() + " Last Request: " + rateLimiter.rateLimit(customerId));
 
-        Thread.sleep(4000);
+        Thread.sleep(1200);
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 7; i++) {
             boolean allowed = rateLimiter.rateLimit(customerId);
             System.out.println(Thread.currentThread().getName() + " Request " + (i + 1) + ": " + allowed);
         }
@@ -151,8 +151,8 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        System.out.println("Testing TokenBucketRateLimiter using main thread");
-//        Main.testTokenBucketRateLimiter();
+        System.out.println("Testing TokenBucketRateLimiter using main thread");
+        Main.testTokenBucketRateLimiter();
 //
 //        System.out.println("Testing TokenBucketRateLimiter using multiple threads");
 //        Main.testTokenBucketRateLimiterUsingMultipleThreads();
@@ -160,8 +160,8 @@ public class Main {
 //        System.out.println("Testing LeakyBucketRateLimiter using main thread");
 //        testLeakyBucketRateLimiter();
 
-        System.out.println("Testing LeakyBucketRateLimiter using multiple threads");
-        testLeakyBucketRateLimiterUsingTwoThreads();
+//        System.out.println("Testing LeakyBucketRateLimiter using multiple threads");
+//        testLeakyBucketRateLimiterUsingTwoThreads();
 //        System.out.println("Testing FixedWindowRateLimiter using main thread");
 //        Main.testFixedWindowRateLimiter();
 //
