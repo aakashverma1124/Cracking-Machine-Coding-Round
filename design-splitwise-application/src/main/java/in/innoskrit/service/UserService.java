@@ -13,19 +13,21 @@ public class UserService {
     }
 
     public void addUser(User user) {
-        try {
-            userRepository.addUser(user);
-        } catch(InvalidUserException e) {
-            System.out.println(e.getMessage());
-        }
+        if (user == null) throw new InvalidUserException("Invalid User.");
+        if (userRepository.getUserByName(user.getUserName()) != null)
+            throw new InvalidUserException("User " + user.getUserName() + " already exists.");
+        userRepository.addUser(user);
     }
 
     public User getUser(String userId) {
-        try {
-            return userRepository.getUser(userId);
-        } catch(UserNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+        User user = userRepository.getUser(userId);
+        if (user == null) throw new UserNotFoundException("User doesn't exist.");
+        return user;
+    }
+
+    public User getUserByName(String userName) {
+        User user = userRepository.getUserByName(userName);
+        if (user == null) throw new UserNotFoundException("User " + userName + " doesn't exist.");
+        return user;
     }
 }

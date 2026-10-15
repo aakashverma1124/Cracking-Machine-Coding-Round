@@ -1,41 +1,109 @@
-### Requirements:
+### Splitwise - Expense Sharing Application
 
-User: Each user should have a userId, name, email, mobile number.
+Splitwise helps groups of people such as flatmates, friends on a trip or colleagues sharing a meal keep track of shared expenses. One person pays the bill, the amount is split among the people involved, and the application keeps a running balance between every pair of users so that everyone knows how much they owe and how much they are owed.
 
-Expense: Could either be EQUAL, EXACT or PERCENT
+You have to design an expense sharing system where users can add an expense, split it among any of the available users in different ways and view the balances. An expense can be split in three ways:
+- **EQUAL** - the amount is divided equally among all the participants.
+- **EXACT** - the exact amount owed by each participant is provided.
+- **PERCENT** - the percentage share of each participant is provided.
 
-Users can add any amount, select any type of expense and split with any of the available users.
+### Features:
+- Each user has a userId, name, email and mobile number.
+- A user can add an expense of any amount, select any split type and split it with any of the available users. The payer may or may not be one of the participants.
+- Amounts and percentages can have up to two decimal places.
+- For EXACT, the sum of the shares must be equal to the total amount. For PERCENT, the sum of the percentages must be 100. Invalid expenses are rejected and do not change any balance.
+- Every share is rounded off to two decimal places and the rounding remainder goes to the first participant. Say User1 paid 100 and it is split equally among 3 people, then the first person owes 33.34 and the others owe 33.33.
+- Balances between two users are netted. If User1 owes User2 100 and User2 owes User1 30, then User1 owes User2 70.
+- Show balances for everyone, or for a single user. Only non-zero balances are shown.
 
-The percent and amount provided could have decimals upto two decimal places.
+### Implementation Requirements:
+Your solution should implement the following functions. Feel free to use the representation for objects you deem fit for the problem and the provided use cases. The functions are ordered in the decreasing order of importance (highest to lowest). We understand that you may not be able to complete the implementation for all the functions listed here. So try to implement them in the order in which they are declared down below.
 
-In case of percent, you need to verify if the total sum of percentage shares is 100 or not.
+```
+addUser(userId, name, email, mobileNumber)
+addExpense(paidBy, amount, expenseType, List<userId> participants, List<value> values) /* values are empty for EQUAL,
+the exact amounts for EXACT and the percentages for PERCENT, in the same order as participants */
+showBalances()        // all non-zero balances
+showBalances(userId)  // non-zero balances the user is part of
+```
 
-In case of exact, you need to verify if the total sum of shares is equal to the total amount or not.
+### Input Format:
+Users can be created in the main method, there is no need to take them as input. The driver program receives the following commands:
 
-The application should have a capability to show expenses for a single user as well as balances for everyone.
+```
+EXPENSE <paid-by-user-id> <amount> <no-of-users> <space-separated-user-ids> <EQUAL|EXACT|PERCENT> <space-separated-values-for-EXACT-or-PERCENT>
+SHOW
+SHOW <user-id>
+```
 
-When asked to show balances, the application should show balances of a user with all the users where there is a non-zero balance.
+### Output Format:
+- `EXPENSE` does not print anything when the expense is added successfully.
+- Every balance is printed as `<user-id-of-x> owes <user-id-of-y>: <amount>`, with the amount rounded off to two decimal places.
+- For `SHOW <user-id>`, if the user owes money they are x, otherwise they are y.
+- If there are no balances to show, print `No balances`.
+- Invalid commands and invalid expenses print an error and do not change any state.
 
-The amount should be rounded off to two decimal places. Say if User1 paid 100 and amount is split equally among 3 people. Assign 33.34 to first person and 33.33 to others.
+### Example:
 
-### Input
+```aidl
+// Users u1, u2, u3 and u4 are created in the main method
 
-You can create a few users in your main method. No need to take it as input.
+SHOW
+>>> No balances
 
-There will be 3 types of input:
+EXPENSE u1 1000 4 u1 u2 u3 u4 EQUAL
+SHOW u4
+>>> u4 owes u1: 250.00
 
-Expense in the format: EXPENSE <user-id-of-person-who-paid> <no-of-users> <space-separated-list-of-users> <EQUAL/EXACT/PERCENT> <space-separated-values-in-case-of-non-equal>
+EXPENSE u2 600 2 u1 u3 EXACT 250 350
+SHOW u1                      // u1 and u2 owe each other 250, so they are settled
+>>> u3 owes u1: 250.00
+>>> u4 owes u1: 250.00
 
-Show balances for all: SHOW
+EXPENSE u4 1200 4 u1 u2 u3 u4 PERCENT 40 20 20 20
+EXPENSE u3 100 3 u1 u2 u3 EQUAL   // u1 owes 33.34, u2 owes 33.33
 
-Show balances for a single user: SHOW <user-id>
+EXPENSE u1 500 2 u2 u3 EXACT 200 250
+>>> Sum of exact amounts must be equal to the total amount 500.00.
 
-### Output
+EXPENSE u1 300 3 u1 u2 u3 PERCENT 50 30 30
+>>> Sum of percentages must be equal to 100.
 
-When asked to show balance for a single user. Show all the balances that user is part of:
+SHOW
+>>> u1 owes u4: 230.00
+>>> u2 owes u4: 240.00
+>>> u3 owes u1: 216.66
+>>> u3 owes u2: 316.67
+>>> u3 owes u4: 240.00
 
-Format: <user-id-of-x> owes <user-id-of-y>: <amount>
-s
-If there are no balances for the input, print No balances
+SHOW u2
+>>> u2 owes u4: 240.00
+>>> u3 owes u2: 316.67
 
-In cases where the user for which balance was asked for, owes money, they’ll be x. They’ll be y otherwise.
+SHOW u9
+>>> User u9 doesn't exist.
+```
+
+### Things to keep in mind:
+- Time Limit is 120 minutes.
+- You are only allowed to use in-memory data structures.
+- You are NOT allowed to use any databases.
+- You are NOT required to have a full-fledged web service or APIs exposed.
+- You are NOT allowed to use any other third-party libraries apart from the standard ones that are part of the language runtime.
+- Please ensure you submit your solution on time even if it is not complete. A partial solution submitted on time is better than a complete solution submitted after time.
+- Spend time on implementing the core features first and then proceed to implement the optional features.
+- Writing test cases to prove the correctness of your code will be appreciated.
+- You are required to demonstrate the working of your solution during code review.
+- A driver program with a main class that simulates the above operations is enough. No need to create any GUI or CLI to make the application interactive.
+
+### Evaluation Criteria
+
+- Separation of concerns
+- Abstractions
+- Application of Object Oriented Design Principles
+- Testability
+- Extensibility
+- Code readability
+- Language proficiency
+- [execution time limit] 3 seconds (java)
+- [memory limit] 1 GB
